@@ -9,6 +9,8 @@ import ait.cohort55.forumproject.dto.PostDto;
 import ait.cohort55.forumproject.dto.exception.NotFoundException;
 import ait.cohort55.forumproject.model.Comment;
 import ait.cohort55.forumproject.model.Post;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -18,15 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
-    @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+//    @Autowired
+//    public PostServiceImpl(PostRepository postRepository) {
+//        this.postRepository = postRepository;
+//    }
 
     private PostDto mapToPostDto(Post post) {
         return PostDto.builder()
