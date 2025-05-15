@@ -12,7 +12,7 @@ import java.util.Map;
 @Builder
 @Getter
 public class PostDto {
-    private Long id;
+    private String id;
     private String title;
     private String content;
     private String author;

@@ -1,6 +1,7 @@
 package ait.cohort55.forumproject.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Post {
-
-    private Long id;
+    @Id
+    private String id;
     private String title;
     private String content;
     private String author;
@@ -23,7 +24,6 @@ public class Post {
     private List<String> tags;
     private int likes;
     private List<Comment> comments;
-
 
 
 }

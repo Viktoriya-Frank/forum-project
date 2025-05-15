@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @ToString
-@Document(collection = "comments")
 public class Comment {
     private String user;
     private String message;

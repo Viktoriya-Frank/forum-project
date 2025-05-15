@@ -22,13 +22,13 @@ public class PostController {
 
 
     @GetMapping("/{id}")
-    public PostDto getPostById(@PathVariable Long id) {
+    public PostDto getPostById(@PathVariable String id) {
         return postService.getPostById(id);
     }
 
     @PostMapping("/{id}/like")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public PostDto addLikeToPost(@PathVariable Long id) {
+    public PostDto addLikeToPost(@PathVariable String id) {
         return postService.addLikeToPost(id);
     }
 
@@ -38,13 +38,13 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}/comment/{id}")
-    public PostDto addComment(@PathVariable Long id, @PathVariable String postId, @PathVariable CommentAddDto commentAddDto) {
+    public PostDto addComment(@PathVariable String id, @PathVariable String postId, @PathVariable CommentAddDto commentAddDto) {
         return postService.addComment(id, postId, commentAddDto);
     }
 
     @DeleteMapping("/{postId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable Long postId) {
+    public void deletePost(@PathVariable String postId) {
         postService.deletePost(postId);
     }
 
@@ -59,7 +59,7 @@ public class PostController {
     }
 
     @PatchMapping("/{id}")
-    public PostDto updatePost(@PathVariable Long id, @RequestBody PostAddDto postAddDto) {
+    public PostDto updatePost(@PathVariable String id, @RequestBody PostAddDto postAddDto) {
         return postService.updatePost(id, postAddDto);
     }
 

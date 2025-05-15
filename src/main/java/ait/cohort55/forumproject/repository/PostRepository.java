@@ -14,5 +14,5 @@ public interface PostRepository extends MongoRepository<Post, Long> {
     List<Post> findByAuthorIgnoreCase(String author);
     List<Post> findByTagsIn(List<String> tags);
     List<Post> findByCreatedDateBetween(LocalDateTime from, LocalDateTime to);
-    Optional<Post> findById(Long id);
+    Optional<Post> findById(String id);
 }

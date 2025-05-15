@@ -9,10 +9,7 @@ import ait.cohort55.forumproject.dto.PostDto;
 import ait.cohort55.forumproject.dto.exception.NotFoundException;
 import ait.cohort55.forumproject.model.Comment;
 import ait.cohort55.forumproject.model.Post;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,10 +23,6 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
-//    @Autowired
-//    public PostServiceImpl(PostRepository postRepository) {
-//        this.postRepository = postRepository;
-//    }
 
     private PostDto mapToPostDto(Post post) {
         return PostDto.builder()
@@ -52,13 +45,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto getPostById(Long id) {
+    public PostDto getPostById(String id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post with id " + id + " not found"));
         return mapToPostDto(post);
     }
 
     @Override
-    public PostDto addLikeToPost(Long id) {
+    public PostDto addLikeToPost(String id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post with id " + id + " not found"));
         post.setLikes(post.getLikes() + 1);
         postRepository.save(post);
@@ -72,7 +65,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto addComment(Long id, String user, CommentAddDto commentAddDto) {
+    public PostDto addComment(String id, String user, CommentAddDto commentAddDto) {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post with id " + id + " not found"));
 
         Comment comment = Comment.builder()
@@ -91,11 +84,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(Long id) {
-        if (!postRepository.existsById(id)) {
+    public void deletePost(String id) {
+        if (!postRepository.existsById(Long.valueOf(id))) {
             throw new NotFoundException("Post with id " + id + " not found");
         }
-        postRepository.deleteById(id);
+        postRepository.deleteById(Long.valueOf(id));
     }
 
     @Override
@@ -114,8 +107,9 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
-    public PostDto updatePost(Long id, PostAddDto postAddDto) {
+    public PostDto updatePost(String id, PostAddDto postAddDto) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Post with id " + id + " not found"));
         post.setTitle(postAddDto.getTitle());
@@ -136,7 +130,7 @@ public class PostServiceImpl implements PostService {
         post.setTags(postAddDto.getTags());
         post.setCreatedDate(LocalDateTime.now());
         post.setLikes(0);
-        post.setComments(List.of());
+        post.setComments(new ArrayList<>());
         Post savedPost = postRepository.save(post);
         return mapToPostDto(savedPost);
     }

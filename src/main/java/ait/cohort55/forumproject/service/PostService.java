@@ -10,22 +10,21 @@ import java.util.List;
 
 public interface PostService {
 
-    PostDto getPostById(Long id);
+    PostDto getPostById(String id);
 
-    PostDto addLikeToPost(Long id);
+    PostDto addLikeToPost(String id);
 
     List<PostDto> getPostsByAuthor(String author);
 
-    PostDto addComment(Long id, String user, CommentAddDto commentAddDto);
+    PostDto addComment(String id, String user, CommentAddDto commentAddDto);
 
-
-    void deletePost(Long id);
+    void deletePost(String id);
 
     List<PostDto> getPostsByTags(List<String> tags);
 
     List<PostDto> getPostsByPeriod(LocalDateTime from, LocalDateTime to);
 
-    PostDto updatePost(Long id, PostAddDto postAddDto);
+    PostDto updatePost(String id, PostAddDto postAddDto);
 
     PostDto addPost(String user, PostAddDto postAddDto);
 }
