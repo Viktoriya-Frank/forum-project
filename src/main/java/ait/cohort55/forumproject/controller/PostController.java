@@ -60,8 +60,7 @@ public class PostController {
 
     @GetMapping("/forum/posts/period")
     public List<PostDto> getPostsByPeriod(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
+            @RequestParam LocalDateTime from, @RequestParam LocalDateTime to) {
         return postService.getPostsByPeriod(from, to);
     }
 
