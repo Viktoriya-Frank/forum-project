@@ -6,6 +6,7 @@ import ait.cohort55.forumproject.dto.PostAddDto;
 import ait.cohort55.forumproject.dto.PostDto;
 import ait.cohort55.forumproject.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,58 +15,64 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/forum/post")
 public class PostController {
-
 
     private final PostService postService;
 
 
-    @GetMapping("/{id}")
-    public PostDto getPostById(@PathVariable String id) {
-        return postService.getPostById(id);
+    @GetMapping("/forum/post/{postId}")
+    public PostDto getPostById(@PathVariable String postId) {
+
+        return postService.getPostById(postId);
     }
 
-    @PostMapping("/{id}/like")
+    @PostMapping("/forum/post/{postId}/like")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public PostDto addLikeToPost(@PathVariable String id) {
-        return postService.addLikeToPost(id);
+    public PostDto addLikeToPost(@PathVariable String postId) {
+
+        return postService.addLikeToPost(postId);
     }
 
-    @GetMapping("/author/{author}")
-    public List<PostDto> getPostsByAuthor(@PathVariable String author) {
-        return postService.getPostsByAuthor(author);
+    @GetMapping("/forum/posts/author/{user}")
+    public List<PostDto> getPostsByAuthor(@PathVariable String user) {
+
+        return postService.getPostsByAuthor(user);
     }
 
-    @PatchMapping("/{postId}/comment/{id}")
-    public PostDto addComment(@PathVariable String id, @PathVariable String postId, @PathVariable CommentAddDto commentAddDto) {
-        return postService.addComment(id, postId, commentAddDto);
+    @PatchMapping("/forum/post/{postId}/comment/{commenter}")
+    public PostDto addComment(@PathVariable String postId,
+                              @PathVariable String commenter,
+                              @RequestBody CommentAddDto commentAddDto) {
+        return postService.addComment(postId, commenter, commentAddDto);
     }
 
-    @DeleteMapping("/{postId}")
+    @DeleteMapping("/forum/post/{postId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable String postId) {
+
         postService.deletePost(postId);
     }
 
-    @GetMapping("/tags")
-    public List<PostDto> getPostsByTags(@PathVariable List<String> values) {
+    @GetMapping("/forum/posts/tags")
+    public List<PostDto> getPostsByTags(@RequestParam List<String> values) {
         return postService.getPostsByTags(values);
     }
 
-    @GetMapping("/period")
-    public List<PostDto> getPostsByPeriod(@PathVariable LocalDateTime from, LocalDateTime to) {
+    @GetMapping("/forum/posts/period")
+    public List<PostDto> getPostsByPeriod(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
         return postService.getPostsByPeriod(from, to);
     }
 
-    @PatchMapping("/{id}")
-    public PostDto updatePost(@PathVariable String id, @RequestBody PostAddDto postAddDto) {
-        return postService.updatePost(id, postAddDto);
+    @PatchMapping("/forum/post/{postId}")
+    public PostDto updatePost(@PathVariable String postId, @RequestBody PostAddDto postAddDto) {
+        return postService.updatePost(postId, postAddDto);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/forum/post/{user}")
     @ResponseStatus(HttpStatus.CREATED)
-    public PostDto addPost(@PathVariable String id, @RequestBody PostAddDto postAddDto) {
-        return postService.addPost(id, postAddDto);
+    public PostDto addPost(@PathVariable String user, @RequestBody PostAddDto postAddDto) {
+        return postService.addPost(user, postAddDto);
     }
 }

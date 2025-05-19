@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +17,7 @@ public class PostDto {
     private String author;
     private LocalDateTime createdDate;
     private List<String> tags;
-    private int likes;
+    private Integer likes;
     private List<CommentDto> comments;
 
 
